@@ -30,7 +30,7 @@ stages:
         jobs:
          - job: Dockerbuild
            steps: 
-           - bash: ci/build-docker.sh
+           - bash: apk add --no-cache bash && ci/build-docker.sh
              displayName: 'Docker Build'
       - stage: DockerPush
         jobs:
