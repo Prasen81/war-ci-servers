@@ -10,12 +10,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-      - stage: 
+      - stage: START
         jobs:
          - job: pipelinestart
            steps:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
+      - stage: Build and Test
+        jobs:     
          - job: Build
            steps:
             - bash: ci/build-app.sh
@@ -24,14 +26,20 @@ stages:
            steps:
            - bash: ci/unit-test-app.sh
              displayName: 'Test'
+      - stage: DockerBuild
+        jobs:
          - job: Dockerbuild
            steps: 
            - bash: ci/build-docker.sh
              displayName: 'Docker Build'
+      - stage: DockerPush
+        jobs:
          - job: Dockerpush
            steps:
             - bash: ci/push-docker.sh
               displayName: 'Docker Image Push'
+      - stage: DockerComponentTest
+        jobs:
          - job: Dockercompose
            steps: 
             - bash: ci/component-test.sh
