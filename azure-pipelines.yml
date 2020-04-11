@@ -17,25 +17,31 @@ stages:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
 
-      stage: Build
-        steps:
-          - bash: ci/build-app.sh
-            displayName: 'Build'
+      - stage: BUILD
+        jobs: 
+        - job: building
+          steps:
+            - bash: ci/build-app.sh
+              displayName: 'Build'
 
-      stage: Test
-        steps:
+      - stage: Test
+        jobs:
+        - job: unittest
+          steps:
           - bash: ci/unit-test-app.sh
             displayName: 'Test'
 
-      stage: Docker Build and Push
-        steps: 
-            - bash: ci/build-docker.sh
-              displayName: 'Docker Build'
-
+      - stage: Docker 
+        jobs: 
+        - job: dockerbuild
+          steps: 
+           - bash: ci/build-docker.sh
+             displayName: 'Docker Build'
+        - job: dodkerpush
+          steps:
             - bash: ci/push-docker.sh
               displayName: 'Docker Image Push'
-
-      stage: Docker Compose
-        steps: 
+        - job: dockercompose
+          steps: 
             - bash: ci/component-test.sh
               displayName: 'Docker compose'
