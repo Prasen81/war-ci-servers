@@ -16,7 +16,7 @@ stages:
            steps:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
-      - stage: Build&Test
+      - stage: BuildTest
         jobs:     
          - job: Build
            steps:
