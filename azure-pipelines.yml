@@ -21,4 +21,7 @@ steps:
 - bash: ci/build-app.sh
   displayName: 'Build'
 
+- bash: ci/unit-test-app.sh
+  displayName: 'Test'
+
 
