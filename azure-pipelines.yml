@@ -19,9 +19,11 @@ stages:
       - stage: BuildTest
         jobs:     
          - job: Build
-           steps:
-            - bash: ci/build-app.sh
-              displayName: 'Build'
+           steps: 
+              - bash: ci/build-app.sh
+                displayName: 'Build'
+              - publish: build/libs/app-*-all.jar app.jar
+                artifact: app
          - job: Unittest
            steps:
            - bash: ci/unit-test-app.sh
