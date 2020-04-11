@@ -16,6 +16,7 @@ stages:
            steps:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
+           - script: echo $(System.DefaultWorkingDirectory)
       - stage: BuildTest
         jobs:     
          - job: Build
