@@ -9,24 +9,33 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Pipeline to build , test and create Docker Image
-  displayName: 'Started Pipeline'
+stages:
+      - stage: START
+        jobs:
+         - job: pipelinestart
+           steps:
+           - script: echo Pipeline to build , test and create Docker Image
+             displayName: 'Started Pipeline'
 
-- bash: ci/build-app.sh
-  displayName: 'Build'
+      stage: Build
+        steps:
+          - bash: ci/build-app.sh
+            displayName: 'Build'
 
-- bash: ci/unit-test-app.sh
-  displayName: 'Test'
+      stage: Test
+        steps:
+          - bash: ci/unit-test-app.sh
+            displayName: 'Test'
 
-- bash: ci/build-docker.sh
-  displayName: 'Docker Build'
+      stage: Docker Build and Push
+        steps: 
+            - bash: ci/build-docker.sh
+              displayName: 'Docker Build'
 
-- bash: ci/push-docker.sh
-  displayName: 'Docker Image Push'
+            - bash: ci/push-docker.sh
+              displayName: 'Docker Image Push'
 
-- bash: ci/component-test.sh
-  displayName: 'Docker compose'
-
-
-
+      stage: Docker Compose
+        steps: 
+            - bash: ci/component-test.sh
+              displayName: 'Docker compose'
