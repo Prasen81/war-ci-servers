@@ -22,6 +22,9 @@ steps:
 - bash: ci/build-docker.sh
   displayName: 'Docker Build'
 
+- bash: export GIT_COMMIT="GL-$CI_COMMIT_SHA" && ci/push-docker.sh
+  displayName: 'Docker Image Push'
+
 
 
 
