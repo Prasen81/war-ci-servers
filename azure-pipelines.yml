@@ -19,4 +19,9 @@ steps:
 - bash: ci/unit-test-app.sh
   displayName: 'Test'
 
+- bash: ci/build-docker.sh
+  displayName: 'Docker Build'
+
+
+
 
