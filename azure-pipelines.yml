@@ -23,8 +23,13 @@ stages:
            steps: 
               - bash: ci/build-app.sh
                 displayName: 'Build'
-              - publish: $(System.DefaultWorkingDirectory) app.jar
-                artifact: app
+              - task: CopyFiles@2
+                inputs: 
+                 Contents: /build/lib/app.jar
+                 TargetFolder: $(System.DefaultWorkingDirectory)
+              - task: PublishBuildArtifacts@1
+              - publish: $(System.DefaultWorkingDirectory)
+                artifact: app.jar
          - job: Unittest
            steps:
            - bash: ci/unit-test-app.sh
