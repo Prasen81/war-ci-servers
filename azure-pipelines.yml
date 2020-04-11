@@ -16,14 +16,14 @@ stages:
            steps:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
-           - script: echo $(System.DefaultWorkingDirectory)
+           - script: echo $(System.DefaultWorkingDirectory) && $(Build.ArtifactStagingDirectory)
       - stage: BuildTest
         jobs:     
          - job: Build
            steps: 
               - bash: ci/build-app.sh
                 displayName: 'Build'
-              - publish: build/libs/app-*-all.jar app.jar
+              - publish: $(System.DefaultWorkingDirectory) app.jar
                 artifact: app
          - job: Unittest
            steps:
