@@ -25,6 +25,8 @@ steps:
 - bash: ci/push-docker.sh
   displayName: 'Docker Image Push'
 
+- bash: ci/component-test.sh
+  displayName: 'Docker compose'
 
 
 
