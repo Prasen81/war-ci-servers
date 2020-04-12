@@ -21,8 +21,7 @@ stages:
         jobs:
          - job: BuildPipeline
            variables:
-             variables:
-                docker_username: 'praqmasofus'
+               docker_username: 'praqmasofus'
            steps:
               - bash: ci/build-app.sh
                 displayName: 'Build'
