@@ -5,8 +5,6 @@
 
 trigger:
 - master
-variables:
-   docker_username: 'praqmasofus'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -18,18 +16,22 @@ stages:
            steps:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
-           - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory) && echo ($docker_username)
+           - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory)
       - stage: 
         jobs:
          - job: BuildPipeline
+           variables:
+             variables:
+                docker_username: 'praqmasofus'
            steps:
               - bash: ci/build-app.sh
                 displayName: 'Build'
               - bash: ci/unit-test-app.sh
                 displayName: 'Test'
+              - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
                 displayName: 'Docker Build'
               - bash: ci/push-docker.sh
-                displayName: 'Docker Image Push'
+                displayName: 'Docker Image Push'                
               - bash: ci/component-test.sh
                 displayName: 'Docker compose'
