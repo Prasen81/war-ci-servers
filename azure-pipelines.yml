@@ -19,23 +19,15 @@ stages:
            - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory)
       - stage: 
         jobs:
-         - job: Build
+         - job: BuildPipeline
            steps:
               - bash: ci/build-app.sh
                 displayName: 'Build'
-         - job: UnitTest
-           steps:
               - bash: ci/unit-test-app.sh
                 displayName: 'Test'
-         - job: Dockerbuild
-           steps: 
-           - bash: ci/build-docker.sh
-             displayName: 'Docker Build'
-         - job: Dockerpush
-           steps:
-            - bash: ci/push-docker.sh
-              displayName: 'Docker Image Push'
-         - job: Dockercompose
-           steps: 
-            - bash: ci/component-test.sh
-              displayName: 'Docker compose'
+              - bash: ci/build-docker.sh
+                displayName: 'Docker Build'
+              - bash: ci/push-docker.sh
+                displayName: 'Docker Image Push'
+              - bash: ci/component-test.sh
+                displayName: 'Docker compose'
