@@ -17,37 +17,24 @@ stages:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
            - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory)
-      - stage: BuildTest
-        jobs:     
+      - stage: 
+        jobs:
          - job: Build
-           steps: 
+           steps:
               - bash: ci/build-app.sh
                 displayName: 'Build'
-              - task: CopyFiles@2
-                inputs: 
-                 Contents: /home/gradle/src/build/libs/app-*-all.jar
-                 TargetFolder: $(Build.ArtifactStagingDirectory)
-              - task: PublishBuildArtifacts@1
-              - publish: $(Build.ArtifactStagingDirectory)
-                artifact: app.jar
-         - job: Unittest
+         - job: UnitTest
            steps:
-           - bash: ci/unit-test-app.sh
-             displayName: 'Test'
-      - stage: DockerBuild
-        jobs:
+              - bash: ci/unit-test-app.sh
+                displayName: 'Test'
          - job: Dockerbuild
            steps: 
-           - bash: apk add --no-cache bash && ci/build-docker.sh
+           - bash: ci/build-docker.sh
              displayName: 'Docker Build'
-      - stage: DockerPush
-        jobs:
          - job: Dockerpush
            steps:
             - bash: ci/push-docker.sh
               displayName: 'Docker Image Push'
-      - stage: DockerComponentTest
-        jobs:
          - job: Dockercompose
            steps: 
             - bash: ci/component-test.sh
