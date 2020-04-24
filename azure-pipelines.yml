@@ -17,6 +17,7 @@ stages:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
            - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory)
+           - script: echo $(BuildDefinitionName)
       - stage: 
         jobs:
          - job: BuildPipeline
