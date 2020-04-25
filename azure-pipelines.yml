@@ -9,7 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  name: '$(Build.Project)_$(Build.DefinitionName)_$(Build.SourceBranchName)_$(Build.BuildNumber)'
+  name: '$(Build.DefinitionName)_$(Build.SourceBranchName)_$(Build.BuildNumber)'
 stages:
       - stage: START
         jobs:
@@ -18,7 +18,7 @@ stages:
            - script: echo Pipeline to build , test and create Docker Image
              displayName: 'Started Pipeline'
            - script: echo $(System.DefaultWorkingDirectory) && echo $(Build.ArtifactStagingDirectory)
-           - script: echo $(Build.SourceBranchName) && echo $(Build.BuildNumber) && echo $(name)
+           - script: echo $(name)
       - stage: 
         jobs:
          - job: BuildPipeline
