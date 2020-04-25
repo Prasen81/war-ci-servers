@@ -9,7 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  name: '$(Build.TeamProject)_$(Build.BuildDefinitionName)_$(Build.SourceBranchName)_$(Build.Date:yyyyMMdd)$(Build.Rev:.r)'
+  name: '$(Build.TeamProject)_$(Build.DefinitionName)_$(Build.SourceBranchName)_$(Build.Date:yyyyMMdd)$(Build.Rev:.r)'
 stages:
       - stage: START
         jobs:
