@@ -29,10 +29,14 @@ stages:
                 displayName: 'Build'
               - bash: ci/unit-test-app.sh
                 displayName: 'Test'
-              - task: PublishBuildArtifacts@1
+              - task: CopyFiles@1
                 inputs:
+                 Contents: 'build/libs/app-*-all.jar app.jar'
+                 targetFolder: '$(System.DefaultWorkingDirectory)'
+              - task: PublishBuildArtifacts@1
+                inputs:                   
                    pathtoPublish: '$(System.DefaultWorkingDirectory)'
-                   artifactName: Website                
+                   artifactName: Website
          - job: DockerBuild
            dependsOn: BuildPipeline
            steps:
@@ -40,10 +44,10 @@ stages:
                 inputs:
                  artifactName: Website
                  downloadPath: '$(System.DefaultWorkingDirectory)'  
-              - task: CopyFiles@1
+              - task: CopyFiles@2
                 inputs:
                  SourceFolder: '$(System.DefaultWorkingDirectory)'
-                 TargetFolder: 'Website/app/build/libs/app-*-all.jar app.jar'             
+                 TargetFolder: 'build/libs/app-*-all.jar app.jar'             
               - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
                 displayName: 'Docker Build'
