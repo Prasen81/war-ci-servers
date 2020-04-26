@@ -43,7 +43,7 @@ stages:
               - task: CopyFiles@1
                 inputs:
                  SourceFolder: '$(System.DefaultWorkingDirectory)'
-                 TargetFolder: 'build/libs/app-*-all.jar app.jar'             
+                 TargetFolder: 'Website/app/build/libs/app-*-all.jar app.jar'             
               - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
                 displayName: 'Docker Build'
