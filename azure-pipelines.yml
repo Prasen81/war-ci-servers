@@ -39,7 +39,11 @@ stages:
               - task: DownloadBuildArtifacts@0
                 inputs:
                  artifactName: Website
-                 downloadPath: '$(System.DefaultWorkingDirectory)'                 
+                 downloadPath: '$(System.DefaultWorkingDirectory)'  
+              - task: CopyFiles@1
+                inputs:
+                 SourceFolder: '$(System.DefaultWorkingDirectory)'
+                 TargetFolder: 'build/libs/app-*-all.jar app.jar'             
               - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
                 displayName: 'Docker Build'
