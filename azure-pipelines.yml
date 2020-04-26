@@ -29,9 +29,17 @@ stages:
                 displayName: 'Build'
               - bash: ci/unit-test-app.sh
                 displayName: 'Test'
+              - task: PublishBuildArtifacts@1
+                inputs:
+                   pathtoPublish: '$(System.DefaultWorkingDirectory)'
+                   artifactName: Website                
          - job: DockerBuild
            dependsOn: BuildPipeline
            steps:
+              - task: DownloadBuildArtifacts@0
+                inputs:
+                 artifactName: Website
+                 downloadPath: '$(System.DefaultWorkingDirectory)'                 
               - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
                 displayName: 'Docker Build'
