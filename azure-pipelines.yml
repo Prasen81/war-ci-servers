@@ -30,6 +30,7 @@ stages:
               - bash: ci/unit-test-app.sh
                 displayName: 'Test'
          - job: DockerBuild
+           dependsOn: BuildPipeline
            steps:
               - bash: echo $(docker_username)
               - bash: ci/build-docker.sh
